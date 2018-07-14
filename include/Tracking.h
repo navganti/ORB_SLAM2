@@ -74,6 +74,11 @@ public:
     // Use this function if you have deactivated local mapping and you only want to localize the camera.
     void InformOnlyTracking(const bool &flag);
 
+    /** Returns the input geometry of the image.
+     *
+     * @return The input geometry.
+     */
+    cv::Size getInputGeometry() const;
 
 public:
 
@@ -185,6 +190,8 @@ protected:
     cv::Mat mK;
     cv::Mat mDistCoef;
     float mbf;
+
+    cv::Size mInputGeometry;
 
     //New KeyFrame rules (according to fps)
     int mMinFrames;

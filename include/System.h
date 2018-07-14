@@ -123,6 +123,18 @@ public:
     std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
 
 private:
+    /** Resize the two images by center cropping to the calibration file
+     * specifications.
+     *
+     * @param imLeft The original left image.
+     * @param imRight The original right image.
+     * @return The left and right images as a pair. Left image is the first
+     * element, right iamge is the second.
+     */
+     std::pair<cv::Mat, cv::Mat> resizeImages(const cv::Mat &imLeft,
+                                              const cv::Mat &imRight);
+
+private:
 
     // Input sensor
     eSensor mSensor;

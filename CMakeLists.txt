@@ -7,8 +7,13 @@ ENDIF()
 
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3 -march=native")
+if (CMAKE_BUILD_TYPE MATCHES Release)
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O3 -Wno-deprecated -march=native")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3 -Wno-deprecated -march=native")
+elseif(CMAKE_BUILD_TYPE MATCHES Debug)
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-deprecated -march=native")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-deprecated -march=native")
+endif()
 
 # Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)

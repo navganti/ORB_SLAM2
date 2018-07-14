@@ -21,12 +21,16 @@
 #include "Viewer.h"
 #include <pangolin/pangolin.h>
 
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+
 #include <mutex>
 
 namespace ORB_SLAM2
 {
 
-Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer, Tracking *pTracking, const string &strSettingPath):
+Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer, Tracking *pTracking, const string &strSettingPath, const cv::Size &input_geometry):
     mpSystem(pSystem), mpFrameDrawer(pFrameDrawer),mpMapDrawer(pMapDrawer), mpTracker(pTracking),
     mbFinishRequested(false), mbFinished(true), mbStopped(true), mbStopRequested(false)
 {
@@ -37,8 +41,8 @@ Viewer::Viewer(System* pSystem, FrameDrawer *pFrameDrawer, MapDrawer *pMapDrawer
         fps=30;
     mT = 1e3/fps;
 
-    mImageWidth = fSettings["Camera.width"];
-    mImageHeight = fSettings["Camera.height"];
+    mImageWidth = static_cast<float>(input_geometry.width);
+    mImageHeight = static_cast<float>(input_geometry.height);
     if(mImageWidth<1 || mImageHeight<1)
     {
         mImageWidth = 640;

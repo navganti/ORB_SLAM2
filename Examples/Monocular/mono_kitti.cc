@@ -25,6 +25,10 @@
 #include<chrono>
 #include<iomanip>
 
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+
 #include<opencv2/core/core.hpp>
 
 #include"System.h"

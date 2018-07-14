@@ -23,6 +23,10 @@
 #include "ORBmatcher.h"
 #include "Optimizer.h"
 
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+
 #include<mutex>
 
 namespace ORB_SLAM2

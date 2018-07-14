@@ -28,6 +28,10 @@
 
 #include "ORBmatcher.h"
 
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+
 #include<mutex>
 #include<thread>
 
@@ -221,7 +225,8 @@ bool LoopClosing::DetectLoop()
     }
     else
     {
-        return true;
+        // return true;
+        return false;
     }
 
     mpCurrentKF->SetErase();

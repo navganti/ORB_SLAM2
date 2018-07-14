@@ -24,6 +24,10 @@
 #include<opencv2/core/core.hpp>
 #include<opencv2/features2d/features2d.hpp>
 
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+
 #include"ORBmatcher.h"
 #include"FrameDrawer.h"
 #include"Converter.h"
@@ -55,6 +59,15 @@ Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer,
     float fy = fSettings["Camera.fy"];
     float cx = fSettings["Camera.cx"];
     float cy = fSettings["Camera.cy"];
+    float orig_height = fSettings["Camera.OrigHeight"];
+    float orig_width = fSettings["Camera.OrigWidth"];
+    float cropped_height = fSettings["Camera.CroppedHeight"];
+    float cropped_width = fSettings["Camera.CroppedWidth"];
+
+    mInputGeometry = cv::Size{static_cast<int>(cropped_width),
+                            static_cast<int>(cropped_height)};
+    cx = cx - (orig_width - static_cast<float>(mInputGeometry.width)) / 2.0f;
+    cy = cy - (orig_height - static_cast<float>(mInputGeometry.height)) / 2.0f;
 
     cv::Mat K = cv::Mat::eye(3,3,CV_32F);
     K.at<float>(0,0) = fx;
@@ -145,7 +158,10 @@ Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer,
         else
             mDepthMapFactor = 1.0f/mDepthMapFactor;
     }
+}
 
+cv::Size Tracking::getInputGeometry() const {
+    return mInputGeometry;
 }
 
 void Tracking::SetLocalMapper(LocalMapping *pLocalMapper)
@@ -1496,7 +1512,8 @@ bool Tracking::Relocalization()
     else
     {
         mnLastRelocFrameId = mCurrentFrame.mnId;
-        return true;
+        // return true;
+        return false;
     }
 
 }

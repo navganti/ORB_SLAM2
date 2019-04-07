@@ -1031,7 +1031,7 @@ bool Tracking::NeedNewKeyFrame()
         }
     }
 
-    bool bNeedToInsertClose = (nTrackedClose<100) && (nNonTrackedClose>70);
+    bool bNeedToInsertClose = (nTrackedClose< 100) && (nNonTrackedClose>70);
 
     // Thresholds
     float thRefRatio = 0.75f;
@@ -1512,8 +1512,7 @@ bool Tracking::Relocalization()
     else
     {
         mnLastRelocFrameId = mCurrentFrame.mnId;
-        // return true;
-        return false;
+        return true;
     }
 
 }
@@ -1521,7 +1520,7 @@ bool Tracking::Relocalization()
 void Tracking::Reset()
 {
 
-    cout << "System Reseting" << endl;
+    cout << "System Resetting" << endl;
     if(mpViewer)
     {
         mpViewer->RequestStop();
@@ -1530,12 +1529,12 @@ void Tracking::Reset()
     }
 
     // Reset Local Mapping
-    cout << "Reseting Local Mapper...";
+    cout << "Resetting Local Mapper...";
     mpLocalMapper->RequestReset();
     cout << " done" << endl;
 
     // Reset Loop Closing
-    cout << "Reseting Loop Closing...";
+    cout << "Resetting Loop Closing...";
     mpLoopClosing->RequestReset();
     cout << " done" << endl;
 

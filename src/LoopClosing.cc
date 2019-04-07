@@ -225,8 +225,7 @@ bool LoopClosing::DetectLoop()
     }
     else
     {
-        // return true;
-        return false;
+        return true;
     }
 
     mpCurrentKF->SetErase();

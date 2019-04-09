@@ -907,8 +907,10 @@ bool Tracking::TrackWithMotionModel()
         nmatches = matcher.SearchByProjection(mCurrentFrame,mLastFrame,2*th,mSensor==System::MONOCULAR);
     }
 
-    if(nmatches<20)
+    if(nmatches<20) {
+        std::cout << "Not enough matches" << std::endl;
         return false;
+    }
 
     // Optimize frame pose with all matches
     Optimizer::PoseOptimization(&mCurrentFrame);
@@ -938,6 +940,11 @@ bool Tracking::TrackWithMotionModel()
     {
         mbVO = nmatchesMap<10;
         return nmatches>20;
+    }
+
+    if (nmatchesMap<=10)
+    {
+        std::cout << "nmatchesMap is not >=10" << std::endl;
     }
 
     return nmatchesMap>=10;
@@ -1031,7 +1038,7 @@ bool Tracking::NeedNewKeyFrame()
         }
     }
 
-    bool bNeedToInsertClose = (nTrackedClose< 100) && (nNonTrackedClose>70);
+    bool bNeedToInsertClose = (nTrackedClose< 30) && (nNonTrackedClose>70);
 
     // Thresholds
     float thRefRatio = 0.75f;
